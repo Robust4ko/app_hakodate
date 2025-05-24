@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>津波避難シミュレーション</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #00bfff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2em;
+        }
+
+        header p {
+            font-size: 1em;
+        }
+
+        footer {
+            background-color: white;
+            color: gray;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            height: calc(100% - 100px); /* header + footer */
+        }
+
+        .map-area {
+            flex: 2;
+            background-color: #f0f0f0;
+        }
+
+        .info-area {
+            flex: 1;
+            background-color: #e0e0e0;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        .info-area button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            margin-top: 10px;
+            background-color: #00bfff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .info-area button:hover {
+            background-color: #009acc;
+        }
+
+        /* ▼ スマホ対応（横並び → 縦並び） */
+        @media (max-width: 768px) {
+        /* ヘッダーさらに圧縮 */
+            header {
+                padding: 6px 10px;
+            }
+
+            header h1 {
+                font-size: 1em;
+                margin: 0;
+            }
+
+            header p {
+                font-size: 0.75em;
+                margin: 3px 0 0 0;
+            }
+
+            /* レイアウト縦並び＋高さ最適化 */
+            .container {
+                flex-direction: column;
+                height: calc(100% - 80px); /* header + footer 合わせて */
+            }
+
+            .map-area {
+                height: 72vh;
+            }
+
+            .info-area {
+                max-height: 15vh;
+                padding: 8px;
+                font-size: 0.85em;
+                overflow-y: auto;  
+                line-height: 1.2;
+            }
+
+            #map {
+                height: 100%;
+            }
+
+            footer {
+                padding: 6px;
+                font-size: 0.75em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>津波避難シミュレーション</h1>
+        <p>地図をクリックして最短経路を確認してください</p>
+    </header>
+
+    <div class="container">
+        <div class="map-area" id="map"></div>
+        <div class="info-area">
+            <h2>最短の避難先：</h2>
+            <p id="nearest-destination">クリックして確認してください</p>
+            <button onclick="useCurrentLocation()">現在地から避難する</button>
+        </div>
+    </div>
+
+    <footer>
+        都市地域デザイン学研究室
+    </footer>
+
+    <script async defer 
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHARZBVr3rzCr_ejyqvMVxoU-V9VfKnfw&language=ja&callback=initMap">
+    </script>
+    <script src="./map_eva.js"></script>
+</body>
+</html>
